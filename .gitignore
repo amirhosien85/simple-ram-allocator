@@ -1,0 +1,12 @@
+# Object files
+*.o
+
+# Executables (Windows)
+*.exe
+*.dll
+
+# Executables (Linux/Mac)
+simulation
+
+# VS Code settings folder
+.vscode/
