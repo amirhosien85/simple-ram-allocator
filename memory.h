@@ -17,5 +17,6 @@ void init_memory();
 bool allocate_memory(int process_id, int size);
 void free_memory(int process_id);
 void show_memory_map();
-
+// memory.h (این خط را اضافه کن)
+bool allocate_best_fit(int process_id, int size);
 #endif

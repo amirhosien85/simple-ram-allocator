@@ -64,4 +64,51 @@ void show_memory_map() {
         if ((i + 1) % 20 == 0) printf("\n");
     }
     printf("------------------\n");
+    
+}
+//added next
+
+bool allocate_best_fit(int process_id, int size) {
+    int best_start_index = -1;
+    int min_fragmentation = MEMORY_SIZE + 1; // یک عدد بزرگ فرضی
+    
+    int current_free_count = 0;
+    int current_start_index = -1;
+
+    for (int i = 0; i < MEMORY_SIZE; i++) {
+        if (ram[i] == 0) {
+            if (current_free_count == 0) current_start_index = i;
+            current_free_count++;
+        } else {
+            // پایان یک بلوک خالی
+            if (current_free_count >= size) {
+                int fragmentation = current_free_count - size;
+                if (fragmentation < min_fragmentation) {
+                    min_fragmentation = fragmentation;
+                    best_start_index = current_start_index;
+                }
+            }
+            // ریست کردن شمارنده
+            current_free_count = 0;
+            current_start_index = -1;
+        }
+    }
+
+    // چک کردن آخرین بلوک (اگر تا آخر حافظه خالی بود)
+    if (current_free_count >= size) {
+        int fragmentation = current_free_count - size;
+        if (fragmentation < min_fragmentation) {
+            best_start_index = current_start_index;
+        }
+    }
+
+    // اگر جای مناسب پیدا شد، پرش کن
+    if (best_start_index != -1) {
+        for (int j = best_start_index; j < best_start_index + size; j++) {
+            ram[j] = process_id;
+        }
+        return true;
+    }
+    
+    return false;
 }

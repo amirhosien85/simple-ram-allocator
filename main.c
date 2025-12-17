@@ -12,14 +12,24 @@ int main() {
         scanf("%d", &choice);
 
         switch (choice) {
+            // در قسمت case 1 فایل main.c این تغییرات را بده:
+
             case 1:
                 printf("Enter Process ID and Size: ");
                 scanf("%d %d", &pid, &size);
-                if (allocate_memory(pid, size)) {
-                    printf(">> Success!\n");
-                } else {
-                    printf(">> Error: Not enough contiguous memory.\n");
-                }
+                
+                printf("Choose Algorithm: 1.First-Fit  2.Best-Fit: ");
+                int alg;
+                scanf("%d", &alg);
+
+                bool result = false;
+                if (alg == 1) 
+                    result = allocate_memory(pid, size); // همان تابع قبلی
+                else 
+                    result = allocate_best_fit(pid, size); // تابع جدید
+
+                if (result) printf(">> Success!\n");
+                else printf(">> Error: Not enough memory.\n");
                 break;
             case 2:
                 printf("Enter Process ID to free: ");
